@@ -1,0 +1,52 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class DatabaseConnection
+{
+    Connection connection = null;
+    Properties props = new Properties();
+
+    public DatabaseConnection()
+    {
+        try
+        {
+            //Using properties so I don't hardcore in all the connection information
+            props.load(new FileInputStream("configProperties"));
+            final String DBurl = props.getProperty("db.url");
+            final String DBuser = props.getProperty("db.user");
+            final String DBpassword = props.getProperty("db.password");
+
+            connection = DriverManager.getConnection(DBurl, DBuser, DBpassword);
+        }
+        catch (SQLException sqlException)
+        {
+            sqlException.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void closeConnection(Connection connection)
+    {
+        try
+        {
+            if(connection != null)
+            {
+                connection.close();
+            }
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+}
+
