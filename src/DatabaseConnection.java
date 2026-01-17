@@ -12,6 +12,11 @@ public class DatabaseConnection
 
     public DatabaseConnection()
     {
+        startConnection();
+    }
+
+    public void startConnection()
+    {
         try
         {
             //Using properties so I don't hardcode in all the connection information
@@ -23,7 +28,6 @@ public class DatabaseConnection
             connection = DriverManager.getConnection(DBurl, DBuser, DBpassword);
 
             System.out.println("Database connection established");
-
         }
         catch (SQLException sqlException)
         {
@@ -35,7 +39,7 @@ public class DatabaseConnection
         }
     }
 
-    public void closeConnection(Connection connection)
+    public void closeConnection()
     {
         try
         {
