@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.lang.Object;
+import org.apache.commons.validator.routines.EmailValidator;
+
 
 
 
@@ -11,6 +14,7 @@ public class DatabaseOperations extends DatabaseConnection
 {
     Scanner input = new Scanner(System.in);
     DatabaseConnection dbcon = new DatabaseConnection();
+    EmailValidator emailValidator = EmailValidator.getInstance();
 
     Connection connection = null;
     PreparedStatement pstat = null;
@@ -31,6 +35,7 @@ public class DatabaseOperations extends DatabaseConnection
         String lastName;
         String email;
         String password;
+        boolean isAddValid;
         int phone;
 
         System.out.println("Enter your first name: ");
@@ -44,26 +49,33 @@ public class DatabaseOperations extends DatabaseConnection
         System.out.println("Enter your phone number: ");
         phone = input.nextInt();
 
-        User user = new User(firstName, lastName, email, password, phone);
-
-        try
+        isAddValid = emailValidator.isValid(email);
+        if (!isAddValid)
         {
-            connection = dbcon.startConnection();
-            pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, email, password, phone_number) VALUES (?,?,?,?,?) ");
-
-            pstat.setString(1, firstName);
-            pstat.setString(2, lastName);
-            pstat.setString(3, email);
-            pstat.setString(4, password);
-            pstat.setInt(5, phone);
-
-            i = pstat.executeUpdate();
-            System.out.println(i + " Record created");
-            connection = dbcon.closeConnection();
+            System.out.println("Email is not in a valid format");
+            return;
         }
-        catch (Exception e)
+        else
         {
-            e.printStackTrace();
+            User user = new User(firstName, lastName, email, password, phone);
+
+            try {
+                connection = dbcon.startConnection();
+                pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, email, password, phone_number) VALUES (?,?,?,?,?) ");
+
+                pstat.setString(1, firstName);
+                pstat.setString(2, lastName);
+                pstat.setString(3, email);
+                pstat.setString(4, password);
+                pstat.setInt(5, phone);
+
+                i = pstat.executeUpdate();
+                System.out.println(i + " Record created");
+                connection = dbcon.closeConnection();
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
     }
