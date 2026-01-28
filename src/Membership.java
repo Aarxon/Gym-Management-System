@@ -1,9 +1,9 @@
 public class Membership
 {
-    boolean status = false;
-    String startDate = "";
-    String expiryDate = "";
-    String type = "";
+    private boolean status = false;
+    private String startDate = "";
+    private String expiryDate = "";
+    private String type = "";
 
     public Membership(boolean status, String startDate, String expiryDate, String type)
     {

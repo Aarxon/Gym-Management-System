@@ -3,14 +3,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.lang.Object;
 import org.apache.commons.validator.routines.EmailValidator;
 
-
-
-
-
-public class DatabaseOperations extends DatabaseConnection
+public class TrainerDBO
 {
     Scanner input = new Scanner(System.in);
     DatabaseConnection dbcon = new DatabaseConnection();
@@ -20,21 +15,16 @@ public class DatabaseOperations extends DatabaseConnection
     PreparedStatement pstat = null;
     ResultSet resultSet = null;
 
-
-
-
-    public DatabaseOperations()
-    {
-
-    }
-
-    public void createNewUser()
+    public void createNewTrainer()
     {
         int i = 0;
+        int switchChoice = 0;
         String firstName;
         String lastName;
         String email;
         String password;
+        String trainingType = "";
+        String description = "";
         boolean isAddValid;
         int phone;
 
@@ -48,6 +38,31 @@ public class DatabaseOperations extends DatabaseConnection
         password = input.next();
         System.out.println("Enter your phone number: ");
         phone = input.nextInt();
+        System.out.println("Pick a training type: "
+                + "\n 1. Yoga"
+                + "\n 2. HIIT"
+                + "\n 3. Spinning/Cycling"
+                + "\n 4. Strength Training"
+                + "\n 5. Pilates");
+        switch(switchChoice)
+        {
+            case 1:
+                trainingType = "Yoga";
+                break;
+            case 2:
+                trainingType = "HITT";
+                break;
+            case 3:
+                trainingType = "Spinning/Cycling";
+                break;
+            case 4:
+                trainingType = "Strength Training";
+                break;
+            case 5:
+                trainingType = "Pilates";
+                break;
+        }
+        System.out.println("Enter a little description about yourself and your training: ");
 
         isAddValid = emailValidator.isValid(email);
         if (!isAddValid)
@@ -57,17 +72,19 @@ public class DatabaseOperations extends DatabaseConnection
         }
         else
         {
-            User user = new User(firstName, lastName, email, password, phone);
+            Trainer trainer = new Trainer(firstName, lastName, email, password, phone, trainingType, description);
 
             try {
                 connection = dbcon.startConnection();
-                pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, email, password, phone_number) VALUES (?,?,?,?,?) ");
+                pstat = connection.prepareStatement("INSERT INTO Trainers (first_name, last_name, email, password, phone_number, training_type, description) VALUES (?,?,?,?,?,?,?) ");
 
                 pstat.setString(1, firstName);
                 pstat.setString(2, lastName);
                 pstat.setString(3, email);
                 pstat.setString(4, password);
                 pstat.setInt(5, phone);
+                pstat.setString(6, trainingType);
+                pstat.setString(7, description);
 
                 i = pstat.executeUpdate();
                 System.out.println(i + " Record created");
@@ -77,10 +94,9 @@ public class DatabaseOperations extends DatabaseConnection
                 e.printStackTrace();
             }
         }
-
     }
 
-    public void loginUser()
+    public void loginTrainer()
     {
         connection = dbcon.startConnection();
         MainWindow mw = new MainWindow();
@@ -95,7 +111,7 @@ public class DatabaseOperations extends DatabaseConnection
 
         try
         {
-            String retrieve = "SELECT * FROM  Users WHERE email = ? AND password = ?";
+            String retrieve = "SELECT * FROM  Trainers WHERE email = ? AND password = ?";
 
             pstat = connection.prepareStatement(retrieve);
             pstat.setString(1, email);
@@ -119,15 +135,5 @@ public class DatabaseOperations extends DatabaseConnection
             e.printStackTrace();
         }
         connection = dbcon.closeConnection();
-    }
-
-    public void update()
-    {
-
-    }
-
-    public void delete()
-    {
-
     }
 }

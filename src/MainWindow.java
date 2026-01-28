@@ -1,13 +1,9 @@
 import javax.swing.*;
 import java.util.Scanner;
-import java.awt.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame
 {
-    DatabaseOperations dbops = new DatabaseOperations();
+    UserDBO dbops = new UserDBO();
     Scanner input = new Scanner(System.in);
 
     public MainWindow()
@@ -26,6 +22,7 @@ public class MainWindow extends JFrame
             System.out.println("1. Login");
             System.out.println("2. Register");
             System.out.println("3. Exit");
+            System.out.print("5. Admin mode");
             choice = input.nextInt();
 
             switch(choice)
