@@ -1,4 +1,6 @@
+package com.ggfitness;
 
+import com.ggfitness.gui.MainWindow;
 
 public class GymManagementSystem
 {

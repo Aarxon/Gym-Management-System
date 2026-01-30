@@ -1,8 +1,13 @@
+package com.ggfitness.database;
+
 import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.ggfitness.gui.MainWindow;
+import com.ggfitness.model.User;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class UserDBO

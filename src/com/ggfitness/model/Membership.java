@@ -1,3 +1,5 @@
+package com.ggfitness.model;
+
 public class Membership
 {
     private boolean status = false;

@@ -1,10 +1,13 @@
+package com.ggfitness.gui;
+
+import com.ggfitness.database.UserDBO;
 import javax.swing.*;
 import java.util.Scanner;
 
 public class MainWindow extends JFrame
 {
-    UserDBO dbops = new UserDBO();
-    Scanner input = new Scanner(System.in);
+    UserDBO userDBO = new UserDBO();
+    Scanner input = new Scanner(System.in); //
 
     public MainWindow()
     {
@@ -28,10 +31,10 @@ public class MainWindow extends JFrame
             switch(choice)
             {
                 case 1:
-                    dbops.loginUser();
+                    userDBO.loginUser();
                     break;
                 case 2:
-                    dbops.createNewUser();
+                    userDBO.createNewUser();
                     break;
                 case 3:
                     System.out.println("Exiting... ");
@@ -50,7 +53,7 @@ public class MainWindow extends JFrame
         {
 
             System.out.println("Welcome to GG Fitness");
-            System.out.println("1. Buy Membership");
+            System.out.println("1. Buy com.ggfitness.model.Membership");
             System.out.println("2. Log out");
 
             choice = input.nextInt();

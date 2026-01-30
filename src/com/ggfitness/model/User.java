@@ -1,3 +1,5 @@
+package com.ggfitness.model;
+
 public class User
 {
     private String firstName;

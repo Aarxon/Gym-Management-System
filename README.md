@@ -6,10 +6,10 @@
 
 ## 💻 Features
 
-- **🧑 User Accounts** – Register, login, and book classes  
+- **🧑 com.ggfitness.model.User Accounts** – Register, login, and book classes  
 - **💳 Memberships** – Purchase and track membership status  
 - **📅 Class Scheduling** – View and book available classes  
-- **🏋️ Trainer Management** – Assign trainers to classes  
+- **🏋️ com.ggfitness.model.Trainer Management** – Assign trainers to classes  
 - **🗄️ Database Integration** – MySQL + JDBC for all backend data  
 
 ---
@@ -18,6 +18,6 @@
 
 - **Maven** for dependency management  
 - **Swing** for GUI (planned for later)  
-- **MySQL** for database storage  
-- **JDBC** for database connection  
+- **MySQL** for com.ggfitness.database storage  
+- **JDBC** for com.ggfitness.database connection  
 

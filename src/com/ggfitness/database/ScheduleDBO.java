@@ -1,9 +1,10 @@
+package com.ggfitness.database;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 
 public class ScheduleDBO

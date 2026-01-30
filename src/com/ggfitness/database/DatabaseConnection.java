@@ -1,3 +1,5 @@
+package com.ggfitness.database;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;

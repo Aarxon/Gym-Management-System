@@ -1,3 +1,5 @@
+package com.ggfitness.model;
+
 public class Trainer extends User
 {
     private String trainingType;
