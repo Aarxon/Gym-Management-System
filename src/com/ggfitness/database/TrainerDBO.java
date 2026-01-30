@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.ggfitness.gui.MainWindow;
 import com.ggfitness.model.Trainer;
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -31,7 +30,7 @@ public class TrainerDBO
         String trainingType = "";
         String description = "";
         boolean isAddValid;
-        int phone;
+        String phone;
 
         System.out.println("Enter your first name: ");
         firstName = input.next();
@@ -42,7 +41,7 @@ public class TrainerDBO
         System.out.println("Enter your password: ");
         password = input.next();
         System.out.println("Enter your phone number: ");
-        phone = input.nextInt();
+        phone = input.next();
         System.out.println("Pick a training type: "
                 + "\n 1. Yoga"
                 + "\n 2. HIIT"
@@ -87,7 +86,7 @@ public class TrainerDBO
                 pstat.setString(2, lastName);
                 pstat.setString(3, email);
                 pstat.setString(4, password);
-                pstat.setInt(5, phone);
+                pstat.setString(5, phone);
                 pstat.setString(6, trainingType);
                 pstat.setString(7, description);
 
@@ -104,7 +103,6 @@ public class TrainerDBO
     public void loginTrainer()
     {
         connection = dbcon.startConnection();
-        MainWindow mw = new MainWindow();
 
         String email;
         String password;
@@ -127,7 +125,6 @@ public class TrainerDBO
             if(resultSet.next())
             {
                 System.out.println("Welcome " + " " + resultSet.getString("first_name"));
-                mw.userScreen();
             }
             else
             {

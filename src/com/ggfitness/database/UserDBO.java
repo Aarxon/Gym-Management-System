@@ -5,14 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.ggfitness.gui.MainWindow;
 import com.ggfitness.model.User;
 import org.apache.commons.validator.routines.EmailValidator;
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import javax.swing.*;
 
 public class UserDBO
 {
-    Scanner input = new Scanner(System.in);
     DatabaseConnection dbcon = new DatabaseConnection();
     EmailValidator emailValidator = EmailValidator.getInstance();
 
@@ -25,36 +24,19 @@ public class UserDBO
 
     }
 
-    public void createNewUser()
+    public void createNewUser(String firstName, String lastName, String email, String password, String phoneNumber)
     {
         int i = 0;
-        String firstName;
-        String lastName;
-        String email;
-        String password;
         boolean isAddValid;
-        int phone;
-
-        System.out.println("Enter your first name: ");
-        firstName = input.next();
-        System.out.println("Enter your last name: ");
-        lastName = input.next();
-        System.out.println("Enter your email: ");
-        email = input.next();
-        System.out.println("Enter your password: ");
-        password = input.next();
-        System.out.println("Enter your phone number: ");
-        phone = input.nextInt();
 
         isAddValid = emailValidator.isValid(email);
         if (!isAddValid)
         {
-            System.out.println("Email is not in a valid format");
-            return;
+            JOptionPane.showMessageDialog(null, "Invalid Email Address");
         }
         else
         {
-            User user = new User(firstName, lastName, email, password, phone);
+            User user = new User(firstName, lastName, email, password, phoneNumber);
 
             try
             {
@@ -65,10 +47,10 @@ public class UserDBO
                 pstat.setString(2, lastName);
                 pstat.setString(3, email);
                 pstat.setString(4, passwordHash(password));
-                pstat.setInt(5, phone);
+                pstat.setString(5, phoneNumber);
 
                 i = pstat.executeUpdate();
-                System.out.println(i + " Record created");
+                JOptionPane.showMessageDialog(null, i + " Record created");
             }
             catch (Exception e)
             {
@@ -86,30 +68,18 @@ public class UserDBO
     public void loginUser()
     {
         connection = dbcon.startConnection();
-        MainWindow mw = new MainWindow();
-
-        String email;
-        String password;
-
-        System.out.println("Enter your email: ");
-        email = input.next();
-        System.out.println("Enter your password: ");
-        password = input.next();
 
         try
         {
             String retrieve = "SELECT * FROM  Users WHERE email = ? AND password = ?";
 
             pstat = connection.prepareStatement(retrieve);
-            pstat.setString(1, email);
-            pstat.setString(2, password);
 
             resultSet = pstat.executeQuery();
 
             if(resultSet.next())
             {
                 System.out.println("Welcome " + " " + resultSet.getString("first_name"));
-                mw.userScreen();
             }
             else
             {

@@ -1,72 +1,96 @@
 package com.ggfitness.gui;
 
-import com.ggfitness.database.UserDBO;
 import javax.swing.*;
-import java.util.Scanner;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainWindow extends JFrame
 {
-    UserDBO userDBO = new UserDBO();
-    Scanner input = new Scanner(System.in); //
+    UserForum userForum = new UserForum();
+    private JPanel cardPanel;
+    private CardLayout cardLayout;
 
     public MainWindow()
     {
+        cardLayout = new CardLayout();
+        cardPanel = new JPanel(cardLayout);
 
+        cardPanel.add(loginChoicePanel(), "choice");
+
+        add(cardPanel);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cardLayout.show(cardPanel, "choice");
+        setVisible(true);
     }
 
-
-    public void loginScreen()
+    private JPanel loginChoicePanel()
     {
-        int choice = 0;
-        System.out.println("Welcome to GG Fitness");
+        JPanel LoginPanel = new JPanel();
+        LoginPanel.setLayout(new BoxLayout(LoginPanel, BoxLayout.Y_AXIS ));
 
-        while(choice == 0)
+        //Added my images for the main login screen
+        ImageIcon user = new ImageIcon(getClass().getResource("/images/user.png"));
+        ImageIcon trainer = new ImageIcon(getClass().getResource("/images/trainer.png"));
+        Image scaled = user.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+        Image scaled2 = trainer.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+        user = new ImageIcon(scaled);
+        trainer = new ImageIcon(scaled2);
+
+        //Labels with cursor set to hand cursor when they hover
+        JLabel userLabel = new JLabel(user);
+        userLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JLabel trainerLabel = new JLabel(trainer);
+        trainerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+
+        LoginPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        LoginPanel.add(userLabel);
+        LoginPanel.add(Box.createRigidArea(new Dimension(400, 50)));
+        LoginPanel.add(trainerLabel);
+
+        //Add loginPanel to JFrame
+        this.add(LoginPanel);
+
+        //Mouse actions if they click the user icon
+        userLabel.addMouseListener(new MouseAdapter()
         {
-            System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
-            System.out.print("5. Admin mode");
-            choice = input.nextInt();
-
-            switch(choice)
+            public void mouseClicked(MouseEvent e)
             {
-                case 1:
-                    userDBO.loginUser();
-                    break;
-                case 2:
-                    userDBO.createNewUser();
-                    break;
-                case 3:
-                    System.out.println("Exiting... ");
-                    System.exit(0);
-                    break;
-            }
+                int choice = JOptionPane.showConfirmDialog(null, "Do you already have an account?", "User", JOptionPane.YES_NO_OPTION);
 
-        }
+                if(choice == JOptionPane.YES_OPTION)
+                {
+                    JPanel createPanel = userForum.login();
+
+                    cardPanel.add(createPanel, "loginUserAccount");
+                    cardLayout.show(cardPanel, "loginUserAccount");
+                }
+                else if(choice == JOptionPane.NO_OPTION)
+                {
+                    JPanel createPanel = userForum.createAccount();
+
+                    cardPanel.add(createPanel, "createUserAccount");
+                    cardLayout.show(cardPanel, "createUserAccount");
+                }
+
+            }
+        });
+
+
+        //Mouse actions if they click the trainer icon
+        trainerLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+
+            }
+        });
+
+        return LoginPanel;
     }
 
-    public void userScreen()
-    {
-        int choice = 0;
 
-        while(choice == 0)
-        {
-
-            System.out.println("Welcome to GG Fitness");
-            System.out.println("1. Buy com.ggfitness.model.Membership");
-            System.out.println("2. Log out");
-
-            choice = input.nextInt();
-
-            if(choice == 2)
-            {
-                System.out.println("See you again ");
-                loginScreen();
-            }
-        }
-
-
-
-    }
 
 }

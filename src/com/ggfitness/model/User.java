@@ -6,9 +6,9 @@ public class User
     private String lastName;
     private String email;
     private String password;
-    private int phone;
+    private String phone;
     private Membership membership;
-    public User(String firstName, String lastName, String email, String password, int phone, Membership memberShip)
+    public User(String firstName, String lastName, String email, String password, String phone, Membership memberShip)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -18,7 +18,7 @@ public class User
         this.membership = membership;
     }
 
-    public User(String firstName, String lastName, String email, String password, int phone)
+    public User(String firstName, String lastName, String email, String password, String phone)
     {
         this.firstName = firstName;
         this.lastName = lastName;
