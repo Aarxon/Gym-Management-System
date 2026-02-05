@@ -75,6 +75,9 @@ public class UserDBO
 
             pstat = connection.prepareStatement(retrieve);
 
+            pstat.setString(1, email);
+            pstat.setString(2, passwordHash(password));
+
             resultSet = pstat.executeQuery();
 
             if(resultSet.next())

@@ -85,6 +85,17 @@ public class UserForum
         logInPanel.add(logIn);
         logInPanel.add(back);
 
+        logIn.addActionListener( e ->
+        {
+            UserDBO user = new UserDBO();
+
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+
+            user.loginUser(email,password);
+        });
+
+
         back.addActionListener(e ->
         {
 
