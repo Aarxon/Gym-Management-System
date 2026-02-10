@@ -78,7 +78,8 @@ public class TrainerDBO
         {
             Trainer trainer = new Trainer(firstName, lastName, email, password, phone, trainingType, description);
 
-            try {
+            try
+            {
                 connection = dbcon.startConnection();
                 pstat = connection.prepareStatement("INSERT INTO Trainers (first_name, last_name, email, password, phone_number, training_type, description) VALUES (?,?,?,?,?,?,?) ");
 
@@ -92,10 +93,14 @@ public class TrainerDBO
 
                 i = pstat.executeUpdate();
                 System.out.println(i + " Record created");
-                connection = dbcon.closeConnection();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
+            }
+            finally
+            {
+                connection = dbcon.closeConnection();
             }
         }
     }
@@ -136,6 +141,9 @@ public class TrainerDBO
         {
             e.printStackTrace();
         }
-        connection = dbcon.closeConnection();
+        finally
+        {
+            connection = dbcon.closeConnection();
+        }
     }
 }

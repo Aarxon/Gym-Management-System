@@ -17,8 +17,10 @@ public class MainWindow extends JFrame
         cardPanel = new JPanel(cardLayout);
 
         cardPanel.add(loginChoicePanel(), "choice");
-
         add(cardPanel);
+
+        JLabel backLabel = new JLabel(new ImageIcon(getClass().getResource("/images/background.png")));
+        add(backLabel, BorderLayout.CENTER);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cardLayout.show(cardPanel, "choice");
@@ -35,6 +37,7 @@ public class MainWindow extends JFrame
         ImageIcon trainer = new ImageIcon(getClass().getResource("/images/trainer.png"));
         Image scaled = user.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         Image scaled2 = trainer.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+
         user = new ImageIcon(scaled);
         trainer = new ImageIcon(scaled2);
 
@@ -50,7 +53,7 @@ public class MainWindow extends JFrame
         LoginPanel.add(Box.createRigidArea(new Dimension(400, 50)));
         LoginPanel.add(trainerLabel);
 
-        //Add loginPanel to JFrame
+        //Add Panel to JFrame
         this.add(LoginPanel);
 
         //Mouse actions if they click the user icon
@@ -87,6 +90,7 @@ public class MainWindow extends JFrame
 
             }
         });
+
 
         return LoginPanel;
     }

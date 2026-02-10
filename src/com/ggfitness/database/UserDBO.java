@@ -94,7 +94,10 @@ public class UserDBO
         {
             e.printStackTrace();
         }
-        connection = dbcon.closeConnection();
+        finally
+        {
+           dbcon.closeConnection();
+        }
     }
 
     //Method to hash password
