@@ -64,13 +64,13 @@ public class UserDBO
     }
 
 
-    public void loginUser(String email, String password)
+    public User loginUser(String email, String password)
     {
         connection = dbcon.startConnection();
 
         try
         {
-            String retrieve = "SELECT password FROM Users WHERE email = ?";
+            String retrieve = "SELECT user_id, first_name, last_name, email, password, phone_number FROM Users WHERE email = ?";
 
             pstat = connection.prepareStatement(retrieve);
 
@@ -83,7 +83,15 @@ public class UserDBO
 
                 if(verifyPassword(password, passwordHash))
                 {
-                    JOptionPane.showMessageDialog(null, "Welcome " + email);
+                    User user = new User
+                            (
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            resultSet.getString("phone_number")
+                    );
+                    return user;
                 }
                 else
                 {
@@ -104,6 +112,7 @@ public class UserDBO
         {
            dbcon.closeConnection();
         }
+        return null;
     }
 
     //Method to hash password

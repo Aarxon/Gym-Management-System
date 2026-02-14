@@ -3,15 +3,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
 
 
 
 public class MainWindow extends JFrame
 {
+
     private JPanel cardPanel;
     private CardLayout cardLayout;
     UserForum userForum = new UserForum(this);
+    TrainerFourm trainerFourm = new TrainerFourm(this);
 
     public MainWindow()
     {
@@ -76,6 +79,11 @@ public class MainWindow extends JFrame
             public void mouseClicked(MouseEvent e)
             {
 
+                JPanel trainerPael = trainerFourm.trainerLogin();
+
+                cardPanel.add(trainerPael, "trainerLogin");
+                cardLayout.show(cardPanel, "trainerLogin");
+
             }
         });
 
@@ -83,10 +91,6 @@ public class MainWindow extends JFrame
         return LoginPanel;
     }
 
-    protected void userHomeLayout()
-    {
-
-    }
 
     protected void choiceLayout()
     {
@@ -100,6 +104,15 @@ public class MainWindow extends JFrame
         cardPanel.add(createPanel, "createExistingAccount");
         cardLayout.show(cardPanel, "createExistingAccount");
 
+    }
+
+    public void showUserHome(User user)
+    {
+        UserHome userHome = new UserHome(user);
+        JPanel userHomePanel = userHome.homeScreen();
+
+        cardPanel.add(userHomePanel, "userHome");
+        cardLayout.show(cardPanel, "userHome");
     }
 
 

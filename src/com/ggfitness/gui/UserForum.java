@@ -1,6 +1,7 @@
 package com.ggfitness.gui;
 
 import com.ggfitness.database.UserDBO;
+import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.*;
 public class UserForum
 {
     private final MainWindow mainWindow;
+    private User user;
 
     public UserForum(MainWindow mainWindow)
     {
@@ -117,11 +119,15 @@ public class UserForum
         {
 
             UserDBO user = new UserDBO();
-
             String email = emailField.getText().trim();
             String password = passwordField.getText().trim();
 
-            user.loginUser(email,password);
+            User currentUser = user.loginUser(email, password);
+
+            if(currentUser != null)
+            {
+                mainWindow.showUserHome(currentUser);
+            };
 
         });
 
