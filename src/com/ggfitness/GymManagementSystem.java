@@ -6,7 +6,7 @@ public class GymManagementSystem
 {
     public static void main(String[] args)
     {
-        MainWindow MainWindow = new MainWindow();
+        new MainWindow();
     }
 
 }

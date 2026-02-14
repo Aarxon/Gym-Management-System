@@ -1,34 +1,36 @@
 package com.ggfitness.gui;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import net.miginfocom.swing.MigLayout;
 
+
+
 public class MainWindow extends JFrame
 {
-    UserForum userForum = new UserForum();
     private JPanel cardPanel;
     private CardLayout cardLayout;
+    UserForum userForum = new UserForum(this);
 
     public MainWindow()
     {
+
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
         cardPanel.add(loginChoicePanel(), "choice");
-
         add(cardPanel);
-
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cardLayout.show(cardPanel, "choice");
         setVisible(true);
     }
 
+
     private JPanel loginChoicePanel()
     {
-        JPanel LoginPanel = new JPanel(new MigLayout("fill, insets 50, gap 40"));
+        JPanel LoginPanel = new JPanel(new MigLayout("fill, insets 50, gap 30"));
+        LoginPanel.setBackground(Color.GRAY);
 
         //Added my images for the main login screen
         ImageIcon user = new ImageIcon(getClass().getResource("/images/user.png"));
@@ -52,7 +54,6 @@ public class MainWindow extends JFrame
         title.setFont(new Font("Arial", Font.BOLD, 28));
         LoginPanel.add(title, "span, align center");
 
-
         LoginPanel.add(userLabel, "push, align center");
         LoginPanel.add(trainerLabel, "push, align center");
 
@@ -61,23 +62,10 @@ public class MainWindow extends JFrame
         {
             public void mouseClicked(MouseEvent e)
             {
-                int choice = JOptionPane.showConfirmDialog(null, "Do you already have an account?", "User", JOptionPane.YES_NO_OPTION);
-
-                if(choice == JOptionPane.YES_OPTION)
-                {
-                    JPanel createPanel = userForum.existingAccount();
-
-                    cardPanel.add(createPanel, "loginUserAccount");
-                    cardLayout.show(cardPanel, "loginUserAccount");
-                }
-                else if(choice == JOptionPane.NO_OPTION)
-                {
                     JPanel createPanel = userForum.createAccount();
 
                     cardPanel.add(createPanel, "createUserAccount");
                     cardLayout.show(cardPanel, "createUserAccount");
-                }
-
             }
         });
 
@@ -94,5 +82,26 @@ public class MainWindow extends JFrame
 
         return LoginPanel;
     }
+
+    protected void userHomeLayout()
+    {
+
+    }
+
+    protected void choiceLayout()
+    {
+        cardLayout.show(cardPanel, "choice");
+    }
+
+    protected void loginLayout()
+    {
+        JPanel createPanel = userForum.existingAccount();
+
+        cardPanel.add(createPanel, "createExistingAccount");
+        cardLayout.show(cardPanel, "createExistingAccount");
+
+    }
+
+
 
 }

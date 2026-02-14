@@ -8,49 +8,61 @@ import java.awt.*;
 
 public class UserForum
 {
+    private final MainWindow mainWindow;
 
-    public UserForum()
+    public UserForum(MainWindow mainWindow)
     {
-
+        this.mainWindow = mainWindow;
     }
 
     public JPanel createAccount()
     {
-        JPanel createAccountPanel = new JPanel();
-        createAccountPanel.setLayout(new BoxLayout(createAccountPanel, BoxLayout.Y_AXIS));
 
-        createAccountPanel.add(Box.createVerticalGlue());
+        JPanel createAccountPanel = new JPanel(new MigLayout("fill"));
+        JPanel formPanel = new JPanel(new MigLayout("insets 20"));
 
+
+
+        JLabel firstNameLabel = new JLabel("First Name: ");
         JTextField firstNameField = new JTextField(20);
-        createAccountPanel.add(createFieldPanel("Enter First Name: ", firstNameField));
-        createAccountPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        formPanel.add(firstNameLabel, "align center, wrap");
+        formPanel.add(firstNameField, "align center, wrap");
 
+        JLabel lastNameLabel = new JLabel("Last Name: ");
         JTextField lastNameField = new JTextField(20);
-        createAccountPanel.add(createFieldPanel("Enter Last Name: ", lastNameField));
-        createAccountPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        formPanel.add(lastNameLabel, "align center, wrap");
+        formPanel.add(lastNameField, "align center, wrap");
 
-        JTextField numberField = new JTextField(20);
-        createAccountPanel.add(createFieldPanel("Enter Number: ", numberField));
-        createAccountPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
+        JLabel emailLabel = new JLabel("Email: ");
         JTextField emailField = new JTextField(20);
-        createAccountPanel.add(createFieldPanel("Enter Email: ", emailField));
-        createAccountPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        formPanel.add(emailLabel, "align center, wrap");
+        formPanel.add(emailField, "align center, wrap");
 
+        JLabel passwordLabel = new JLabel("Password: ");
         JPasswordField passwordField = new JPasswordField(20);
-        createAccountPanel.add(createFieldPanel("Enter Password: ", passwordField));
+        formPanel.add(passwordLabel, "align center, wrap");
+        formPanel.add(passwordField, "align center, wrap");
 
-        JButton createButton = new JButton("Create Account");
-        createButton.setLayout(new BoxLayout(createButton, BoxLayout.Y_AXIS));
-        createButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        createAccountPanel.add(createButton);
+        JLabel phoneLabel = new JLabel("Phone: ");
+        JTextField numberField = new JTextField(20);
+        formPanel.add(phoneLabel, "align center, wrap");
+        formPanel.add(numberField, "align center, wrap");
 
+        JButton registerButton = new JButton("Register");
         JButton backButton = new JButton("Back");
-        createButton.setLayout(new BoxLayout(createButton, BoxLayout.Y_AXIS));
-        createButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        createAccountPanel.add(backButton);
 
-        createButton.addActionListener(e ->
+        formPanel.add(registerButton, "align center, split 2");
+        formPanel.add(backButton, "align center, wrap");
+
+        JButton alreadyButton = new JButton("Already have a account?");
+        formPanel.add(alreadyButton, "align center");
+
+
+        createAccountPanel.add(formPanel, "push, align center");
+
+
+
+        registerButton.addActionListener(e ->
         {
             UserDBO user = new UserDBO();
 
@@ -63,13 +75,17 @@ public class UserForum
             user.createNewUser(firstName,lastName,email,password,phoneNumber);
         });
 
-        backButton.addActionListener(e ->
+        alreadyButton.addActionListener(e ->
         {
-
+            mainWindow.loginLayout();
 
         });
 
-        createAccountPanel.add(Box.createVerticalGlue());
+        backButton.addActionListener(e ->
+        {
+            mainWindow.choiceLayout();
+        });
+
         return createAccountPanel;
     }
 
@@ -97,23 +113,24 @@ public class UserForum
 
         logInPanel.add(formPanel, "push, align center");
 
+        loginButton.addActionListener(e ->
+        {
+
+            UserDBO user = new UserDBO();
+
+            String email = emailField.getText().trim();
+            String password = passwordField.getText().trim();
+
+            user.loginUser(email,password);
+
+        });
+
+        backButton.addActionListener(e ->
+        {
+            mainWindow.choiceLayout();
+        });
+
         return logInPanel;
     }
 
-    private JPanel createFieldPanel(String labelText, JTextField textField)
-    {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        JLabel label = new JLabel(labelText);
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        textField.setMaximumSize(textField.getPreferredSize()); // important!
-        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        panel.add(label);
-        panel.add(textField);
-
-        return panel;
-    }
 }

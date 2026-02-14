@@ -92,7 +92,7 @@ public class UserDBO
             }
             else
             {
-                System.out.println("Invalid email or password");
+                JOptionPane.showMessageDialog(null, "Invalid Email or Password");
             }
 
         }
