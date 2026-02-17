@@ -115,6 +115,27 @@ public class UserDBO
         return null;
     }
 
+    public void updateUser(String firstName, String lastName, String email, String password, String phoneNumber)
+    {
+        connection = dbcon.startConnection();
+
+        try {
+            String update = " ";
+
+            pstat = connection.prepareStatement(update);
+        }
+        catch (SQLException e)
+        {
+
+        }
+        finally
+        {
+            dbcon.closeConnection();
+        }
+
+
+    }
+
     //Method to hash password
     public String passwordHash(String password)
     {

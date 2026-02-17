@@ -5,19 +5,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
-
+import com.formdev.flatlaf.*;
 
 
 public class MainWindow extends JFrame
 {
-
     private JPanel cardPanel;
     private CardLayout cardLayout;
+    private User user;
     UserForum userForum = new UserForum(this);
     TrainerFourm trainerFourm = new TrainerFourm(this);
 
+
     public MainWindow()
     {
+
+        try
+        {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
@@ -108,11 +117,20 @@ public class MainWindow extends JFrame
 
     public void showUserHome(User user)
     {
-        UserHome userHome = new UserHome(user);
+        UserHome userHome = new UserHome(user, this);
         JPanel userHomePanel = userHome.homeScreen();
 
         cardPanel.add(userHomePanel, "userHome");
         cardLayout.show(cardPanel, "userHome");
+    }
+
+    public void showProfileInfo(User user)
+    {
+        ProfileInfo profileInfo = new ProfileInfo(user);
+        JPanel profileInfoPanel = profileInfo.profileHome();
+
+        cardPanel.add(profileInfoPanel, "profileHome");
+        cardLayout.show(cardPanel, "profileHome");
     }
 
 

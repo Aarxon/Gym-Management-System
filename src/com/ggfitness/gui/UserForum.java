@@ -10,7 +10,6 @@ import java.awt.*;
 public class UserForum
 {
     private final MainWindow mainWindow;
-    private User user;
 
     public UserForum(MainWindow mainWindow)
     {
@@ -57,7 +56,10 @@ public class UserForum
         formPanel.add(backButton, "align center, wrap");
 
         JButton alreadyButton = new JButton("Already have a account?");
-        formPanel.add(alreadyButton, "align center");
+        formPanel.add(alreadyButton, "align center, wrap");
+
+        JButton devlogin = new JButton("DEVVVVVV......");
+                formPanel.add(devlogin, "align center");
 
 
         createAccountPanel.add(formPanel, "push, align center");
@@ -86,6 +88,17 @@ public class UserForum
         backButton.addActionListener(e ->
         {
             mainWindow.choiceLayout();
+        });
+
+        devlogin.addActionListener( e ->
+        {
+            UserDBO user = new UserDBO();
+
+            User currentUser = user.loginUser("admin@gmail.com", "admin");
+
+                mainWindow.showUserHome(currentUser);
+
+
         });
 
         return createAccountPanel;
@@ -127,7 +140,7 @@ public class UserForum
             if(currentUser != null)
             {
                 mainWindow.showUserHome(currentUser);
-            };
+            }
 
         });
 

@@ -32,6 +32,12 @@ public class User
     {
         return firstName;
     }
+
+    public String getlastName()
+    {
+    return lastName;
+    }
+
     public String getEmail()
     {
         return email;
@@ -40,5 +46,10 @@ public class User
     public String getPassword()
     {
         return password;
+    }
+
+    public String getPhone()
+    {
+        return phone;
     }
 }
