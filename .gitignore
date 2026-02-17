@@ -33,3 +33,4 @@ configProperties
 .idea/
 *.iml
 /target/
+META-INF/
